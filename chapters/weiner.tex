@@ -1,15 +1,9 @@
 % !TEX root = ../main.tex
 
-\chapter{Procesos de Weiner}
+\chapter{La integral de Itô}
 \label{chap:weiner}
 
-\section{Filtraciones}
-
-\begin{definicion}[Filtración]
-    Una \termino{filtración} es una familia creciente de sub-$\sigma$-álgebras de una $\sigma$-álgebra $\mathcal{F}$ dada.
-\end{definicion}
-
-\section{Procesos estocásticos}
+\section{Procesos de estocásticos}
 \label{sec:weiner:estocasticos}
 
 \begin{definicion}[Proceso estocástico]
@@ -17,23 +11,75 @@
     Un \termino[proceso!estocástico]{proceso estocástico} es una función $X\colon[0,T]\times\Omega\to\R$ que cumple los siguientes requisitos:
     \begin{itemize}
         \item $\Omega$ es un espacio de probabilidad, luego tiene asociada una $\sigma$-álgebra $\mathcal{F}$ y una medida de probabilidad $\Pro$.
-        \item Si consideramos $[0,T]\times\Omega$ como el espacio de medida equipado con la $\sigma$-álgebra producto $\mathcal{B}\otimes\mathcal{F}$ y la medida producto $\lambda\otimes\Pro$, $X$ es una función medible.
+        \item $X$ es una función medible, considerando $[0,T]\times\Omega$ como el espacio de medida equipado con la $\sigma$-álgebra producto $\mathcal{B}([0,T])\otimes\mathcal{F}$ y la medida producto $\lambda\otimes\Pro$, donde $\mathcal{B}([0,T])$ son los borelianos de $[0,T]$ y $\lambda$ la medida de Lebesgue sobre $[0,T]$.
     \end{itemize}
 \end{definicion}
 
-% observacion (v.a.)
-% observacion (trayectoria)
+\begin{observacion}
+    Si $X\colon[0,T]\times\Omega\to\R$ es un proceso estocástico:
+    \begin{itemize}
+        \item Fijado un $t\in[0,T]$, la función $X_t\colon\Omega\to\R$ definida por $\omega\mapsto X(t,\omega)$ es una variable aleatoria, es decir, una función medible respecto de la $\sigma$-álgebra $\mathcal{F}$.
+        \item Fijado un $\omega\in\Omega$, a la función $X_\omega\colon[0,T]\to\R$ definida por $t\mapsto X(t,\omega)$ se la llama \termino[trayectoria!de un proceso estocástico]{trayectoria} de $X$ asociada a $\omega$.
+    \end{itemize}
+\end{observacion}
+
+\begin{definicion}[Filtración]
+    \label{def:filtracion}
+    Una \termino{filtración} es una familia creciente $\{\mathcal{F}_i\}_{i\in I}$ de sub-$\sigma$-álgebras de una $\sigma$-álgebra $\mathcal{F}$ dada, donde $I\subset\R$.
+
+    Esto es, dados $t_1$, $t_2\in I$ tales que $t_1\leq t_2$, se cumple que $\mathcal{F}_{t_1}\subset\mathcal{F}_{t_2}\subset\mathcal{F}$.
+\end{definicion}
 
 \begin{definicion}[Proceso adaptado]
     \label{def:proceso_adaptado}
-    Un proceso estocástico se dice \termino[proceso!estocástico!adaptado]{adaptado} a la filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ si la función $X_t\colon\Omega\to\R$ definida por $\omega\mapsto X(t,\omega)$ es medible respecto de $\mathcal{F}_t$.
+    Un proceso estocástico se dice \termino[proceso!estocástico!adaptado]{adaptado} a la filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ si para cada $t\in[0,T]$, la variable aleatoria $X_t$ es medible respecto de $\mathcal{F}_t\subset\mathcal{F}$.
+\end{definicion}
+\subsection{Procesos progresivamente medibles}
+\begin{definicion}[Medibilidad progresiva]
+    Decimos que un proceso estocástico $X\colon[0,T]\times\Omega\to\R$ adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ es \termino[proceso!estocástico!progresivamente medible]{progresivamente medible} si para todo $t\in[0,T]$ se cumple que el proceso restringido $X\colon[0,t]\times\Omega\to\R$ es medible respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$.
 \end{definicion}
 
+\begin{proposicion}[condición suficiente para la medibilidad progresiva]
+    Todo proceso estocástico $X\colon[0,T]\times\Omega\to\R$ adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ con trayectorias continuas por la derecha (o por la izquierda) es progresivamente medible.
+\end{proposicion}
+\begin{proof}
+    Dado un $t\in[0,T]$ arbitrario, vamos a particionar $[0,t]$ en $m$ intervalos de la misma longitud, para lo cual definimos los puntos $t_k^{(m)}:=\frac{kt}{m}$ con $k\in\{0,\dotsc,m\}$.
+
+    De ahora en adelante, asumiremos que las trayectorias de $X$ son continuas por la derecha. Con mínimas modificaciones, se puede obtener una demostración para el caso en el que las trayectorias son continuas por la izquierda.
+
+    Definimos el proceso escalonado
+    \begin{equation}
+        X^{(m)}(s,\omega):=X(0,\omega)1_{\{0\}}(s)+\sum_{k=1}^{m}X(t_{k}^{(m)},\omega)1_{(t_{k-1}, t_{k}]}(s)
+    \end{equation}
+    Sobre este proceso cabe señalar algunas cosas:
+    \begin{itemize}
+        \item Las funciones indicadoras son medibles respecto de $\mathcal{B}([0,t])$.
+        \item Las variables aleatorias $X_{t_{k}}$ son medibles respecto de $\mathcal{F}_{t_k}\subset\mathcal{F}_t$.
+        \item El producto de una función medible respecto de $\mathcal{B}([0,t])$ y de una función medible respecto de $\mathcal{F}_t$ es una función medible respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$.
+    \end{itemize}
+    En conclusión, $X^{(m)}$ es medible respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$.
+
+    Fijado $(s,\omega)\in[0,t]\times\Omega$, existe un único $t_{k}^{(m)}$, al que llamaremos $t_{k}^{(m)}(s)$ se cumple que $s\in(t_{k-1}^{(m)}(s), t_{k}^{(m)}(s)]$, y por tanto $X^{(m)}(s,\omega)=X(t_{k}^{(m)}(s),\omega)$.
+
+    Además, sabemos que $0<t_{k}^{(m)}(s)-s\leq \frac{1}{m}$, luego, $\lim_{m\to\infty}t_{k}^{(m)}(s)=s$.
+
+    Usando la continuidad por la derecha de las trayectorias de $X$ tenemos que
+    \begin{equation}
+        \lim_{m\to\infty}X^{(m)}(s,\omega)=\lim_{m\to\infty}X\left(t_{k}^{(m)}(s),\omega\right)=X\left(\lim_{m\to\infty}t_{k}^{(m)}(s),\omega\right)=X(s,\omega)\text{. }
+    \end{equation}
+
+    Recapitulando, tenemos una sucesión $\{X^{(m)}\}_{m=1}^{\infty}$ de funciones medibles respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$, luego su límite, que que es el proceso restringido $X\colon[0,t]\times\Omega\to\R$ también es medible respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$, que es lo que queríamos demostrar.
+\end{proof}
+\begin{teorema}[medibilidad progresiva en $L^2$]
+    Todo proceso estocástico $X\colon[0,T]\times\Omega\to\R$ en $L^2([0,T]\times\Omega)$ y adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ admite una modificación progresivamente medible.
+\end{teorema}
+\subsection{Procesos de Weiner}
 \begin{definicion}[Proceso de Weiner]
+    \label{def:proceso_weiner}
     Un \termino[proceso!de Weiner]{proceso de Weiner} $W$ es un proceso estocástico adaptado a una filtración $\{\mathcal{F}\}_{t\in[0,T]}$ que verifica las siguientes propiedades:
     \begin{itemize}
-        \item La variable aleatoria $W_0\colon\Omega\to\R$ definida por $\omega\mapsto W(0,\omega)$ es nula en casi todo punto, es decir, $\Pro(W_0=0)=1$.
-        \item Las trayectorias del proceso son continuas. Esto es, para todo $\omega\in\Omega$, la función $[0,T]\to\R$ definida por $t\mapsto W(t,\omega)$ es continua.
+        \item La variable aleatoria $W_0$ es nula en casi todo punto, es decir, $\Pro(W_0=0)=1$.
+        \item Las trayectorias del proceso son continuas. Esto es, para cada $\omega$, su trayectoria asociada $X_\omega\colon[0,T]\to\R$ es continua.
         \item Si $0\leq s<t$, la variable aleatoria $W_t-W_s$:
               \begin{itemize}
                   \item Es independiente de la $\sigma$-álgebra $\mathcal{F}_s$.
