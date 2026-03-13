@@ -1,0 +1,22 @@
+\documentclass[11pt, a4paper, twoside, openright]{book}
+
+\usepackage{styles/tesoro}
+
+% \includeonly{chapters/test1, chapters/test2}
+
+\begin{document}
+
+\frontmatter
+\include{frontmatter/portada}
+\include{frontmatter/prefacio}
+\tableofcontents
+\mainmatter
+\include{chapters/test1}
+\include{chapters/test2}
+
+\backmatter
+
+\nocite{*}
+\printbibliography[heading=bibintoc, title={Bibliografía General}]
+
+\end{document}
