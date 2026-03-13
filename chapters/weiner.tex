@@ -1,0 +1,43 @@
+% !TEX root = ../main.tex
+
+\chapter{Procesos de Weiner}
+\label{chap:weiner}
+
+\section{Filtraciones}
+
+\begin{definicion}[Filtración]
+    Una \termino{filtración} es una familia creciente de sub-$\sigma$-álgebras de una $\sigma$-álgebra $\mathcal{F}$ dada.
+\end{definicion}
+
+\section{Procesos estocásticos}
+\label{sec:weiner:estocasticos}
+
+\begin{definicion}[Proceso estocástico]
+    \label{def:proceso_estocastico}
+    Un \termino[proceso!estocástico]{proceso estocástico} es una función $X\colon[0,T]\times\Omega\to\R$ que cumple los siguientes requisitos:
+    \begin{itemize}
+        \item $\Omega$ es un espacio de probabilidad, luego tiene asociada una $\sigma$-álgebra $\mathcal{F}$ y una medida de probabilidad $\Pro$.
+        \item Si consideramos $[0,T]\times\Omega$ como el espacio de medida equipado con la $\sigma$-álgebra producto $\mathcal{B}\otimes\mathcal{F}$ y la medida producto $\lambda\otimes\Pro$, $X$ es una función medible.
+    \end{itemize}
+\end{definicion}
+
+% observacion (v.a.)
+% observacion (trayectoria)
+
+\begin{definicion}[Proceso adaptado]
+    \label{def:proceso_adaptado}
+    Un proceso estocástico se dice \termino[proceso!estocástico!adaptado]{adaptado} a la filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ si la función $X_t\colon\Omega\to\R$ definida por $\omega\mapsto X(t,\omega)$ es medible respecto de $\mathcal{F}_t$.
+\end{definicion}
+
+\begin{definicion}[Proceso de Weiner]
+    Un \termino[proceso!de Weiner]{proceso de Weiner} $W$ es un proceso estocástico adaptado a una filtración $\{\mathcal{F}\}_{t\in[0,T]}$ que verifica las siguientes propiedades:
+    \begin{itemize}
+        \item La variable aleatoria $W_0\colon\Omega\to\R$ definida por $\omega\mapsto W(0,\omega)$ es nula en casi todo punto, es decir, $\Pro(W_0=0)=1$.
+        \item Las trayectorias del proceso son continuas. Esto es, para todo $\omega\in\Omega$, la función $[0,T]\to\R$ definida por $t\mapsto W(t,\omega)$ es continua.
+        \item Si $0\leq s<t$, la variable aleatoria $W_t-W_s$:
+              \begin{itemize}
+                  \item Es independiente de la $\sigma$-álgebra $\mathcal{F}_s$.
+                  \item Sigue una distribución $\Normal(0,t-s)$.
+              \end{itemize}
+    \end{itemize}
+\end{definicion}
