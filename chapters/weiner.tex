@@ -40,6 +40,7 @@
 \end{definicion}
 
 \begin{proposicion}[condición suficiente para la medibilidad progresiva]
+    \label{prop:condicion_suf_progresividad}
     Todo proceso estocástico $X\colon[0,T]\times\Omega\to\R$ adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ con trayectorias continuas por la derecha (o por la izquierda) es progresivamente medible.
 \end{proposicion}
 \begin{proof}
@@ -69,6 +70,41 @@
     \end{equation}
 
     Recapitulando, tenemos una sucesión $\{X^{(m)}\}_{m=1}^{\infty}$ de funciones medibles respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$, luego su límite, que que es el proceso restringido $X\colon[0,t]\times\Omega\to\R$ también es medible respecto de $\mathcal{B}([0,t])\otimes\mathcal{F}_t$, que es lo que queríamos demostrar.
+\end{proof}
+\begin{lema}
+    Dado un proceso $X\in L^2([0,T]\times\Omega)$ adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$, la sucesión $\{X^{(n)}\}_{n=1}^{\infty}$ donde
+    \begin{equation}
+        X^{(n)}(t,\omega):=\int_{\max(0,t-\frac{1}{n})}^{t}X(s,\omega)ds
+    \end{equation}
+    está compuesta por procesos adaptados a $\{\mathcal{F}_t\}_{t\in[0,T]}$ y progresivamente medibles.
+\end{lema}
+\begin{proof}
+    Como $X\in L^2([0,T]\times\Omega)$, $X$ es integrable, luego podemos aplicar el teorema de Fubini, obteniendo que
+    \begin{equation}
+        \infty>\int_{[0,T]\times\Omega}X(s,\omega)ds\otimes d\Pro=\int_{\Omega}\int_{0}^{T}X(s,\omega)dsd\Pro=:E\left(\int_{0}^{T}X(s,\omega)ds\right)\text{, }
+    \end{equation}
+    por ende, casi todas las trayectorias $X_\omega$ son integrables. % casi todas o todas?
+
+    Hechas estas consideraciones notemos que:
+    \begin{itemize}
+        \item Al ser $X_\omega$ integrable, es sencillo comprobar que $X_\omega1_{[\max(0,t-\frac{1}{n}),t]}$ también lo es.
+        \item Dada una función integrable, como $X_\omega1_{[\max(0,t-\frac{1}{n}),t]}$, decimos que la función
+              \begin{equation}
+                  t\mapsto\int_{-\infty}^{t}X(s,\omega)1_{[\max(0,t-\frac{1}{n}),t]}(s)ds=:X^{(n)}(t,\omega)
+              \end{equation}
+              es su \termino[función!integral!indefinida]{integral indefinida}.
+        \item Si una función es la integral indefinida de otra, dicha función es \termino[función!absolutamente continua]{absolutamente continua}, luego casi todas las trayectorias de $X^{(n)}$ son absolutamente continuas.
+    \end{itemize}
+    Veamos además que $X^{(n)}$ es adaptado a $\{\mathcal{F}_t\}_{t\in[0,T]}$, para ello, dado un $t\in[0,T]$, debemos demostrar que $X_t^{(n)}$ es $\mathcal{F}_t$-medible, lo cual ocurre siempre y cuando se verifique la igualdad $E(X_t^{(n)}|\mathcal{F}_t)=X_t^{(n)}$. Y, en efecto, usando el teorema de Fubini condicional y que $X$ es adaptado, tenemos que
+    \begin{equation}
+        \begin{aligned}
+            E(X_t^{(n)}|\mathcal{F}_t) & =E\left(\int_{\max(0, t-\frac{1}{n})}^{t}X(s,\omega)ds|\mathcal{F}_t\right) \\
+                                       & =\int_{\max(0, t-\frac{1}{n})}^{t}E\left(X(s,\omega)|\mathcal{F}_t\right)ds
+            \\
+                                       & =\int_{\max(0, t-\frac{1}{n})}^{t}X(s,\omega)ds=X_t^{(n)}\text{. }
+        \end{aligned}
+    \end{equation}
+    Con esto, ya tenemos todos los ingredientes para usar la proposición \ref{prop:condicion_suf_progresividad}, demostrando la medibilidad progresiva de $X^{(n)}$, y finalizando la demostración.
 \end{proof}
 \begin{teorema}[medibilidad progresiva en $L^2$]
     Todo proceso estocástico $X\colon[0,T]\times\Omega\to\R$ en $L^2([0,T]\times\Omega)$ y adaptado a una filtración $\{\mathcal{F}_t\}_{t\in[0,T]}$ admite una modificación progresivamente medible.
